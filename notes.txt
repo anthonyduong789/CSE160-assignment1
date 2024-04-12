@@ -1,0 +1,94 @@
+Notes on the GLSL language
+
+and the funcitonality of the GLSL language
+
+#Homonenous Coordinates
+
+The homogeneous coordinates use the following coordinate notation: (x, y, z, w). The
+homogeneous coordinate (x, y, z, w) is equivalent to the three-dimensional coordinate
+(x/w, y/w, z/w). So, if you set w to 1.0, you can utilize the homogeneous coordinate
+as a three-dimensional coordinate.
+
+Types and variable names
+
+vec4 gl_PositionSpecifies the position of a vertex
+example of the and position format is (x, y, z, w)
+with the homogeneous coordinate (x/w, y/w, z/w, w)
+
+  " gl_Position = vec4(0.0, 0.5, 0.0, 1.0);\n" + // Coordinates
+  " gl_PointSize = 10.0;\n" + // Set the point size
+
+float gl_PointSizeSpecifies the size of a point (in pixels)
+
+vec4 gl_FragColorSpecify the color of a fragment (in RGBA)
+
+Understanding the Draw Opearation 
+
+
+gl.drawArrays(mode, first, count)
+
+Execute a vertex shader to draw shapes specified by the mode parameter.
+
+Parameters
+#what we are drawing i.e shape
+mode: Specifies the type of shape to be drawn. The following symbolic
+constants are accepted: gl.POINTS, gl.LINES, gl.LINE_STRIP,
+gl.LINE_LOOP, gl.TRIANGLES, gl.TRIANGLE_STRIP, and gl.
+TRIANGLE_FAN.
+
+
+gl.getAttribLocation(program, name)
+Parameters:
+program: -> The program object to be queried. holds the vertex shade rand a fragment shader
+name: -> The name of the attribute variable. who's location is to be retrieved
+
+return value: 
+0<->location of the specified attribute variable
+-1 -> attribute variable does not exist
+
+gl.vertexAttrib3f(location, v0, v1, v2)
+Parameters
+locaiton -> the location of the attribute variable to be modified
+v0 -> the first element fo the attibute vaible then 2nd etc. 
+v1 -> the secondr
+v2 -> the third 
+
+The first argument of the method call specifies the location returned by gl.getAttrib-
+Location()
+
+#where it is at 
+first: Specifies which vertex to start drawing from (integer).
+
+#vertices number
+countSpecifies the number of vertices to be used (integer).
+Return valueNone
+
+ErrorsINVALID_ENUM mode is none of the preceding values.
+INVALID_VALUE first is negative or count is negative.
+
+#Draw a Point 
+we use attribut variables to pass data to from the javascript program into the 
+vertex shader of Webgl
+
+refer to them as atrtibute variables
+
+steps:
+
+1. Prepare the attribute variable for the vertex position in the vertex shader.
+2. Assign the attribute variable to the gl_Position variable.
+3. Pass the data to the attribute variable.
+
+Hanlding Mouse CLick Events
+Let’s look at what the function click() is doing. The processing flow follows:
+1. Retrieve the position of the mouse click and then store it in an array.
+2. Clear <canvas>.
+3. For each position stored in the array, draw a poi
+
+#storage qualifier: are basically global varirables that is passed data so that
+we can use this for the webgl from outsidfe
+
+Storage Qualifier-> attibute
+Type -> vec4
+Variable Name -> a_Position
+
+attribute vec4 a_Position;
