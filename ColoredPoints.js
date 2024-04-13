@@ -56,11 +56,15 @@ function connectVariablesToGLSL() {
   // Get the storage location of u_Size
   u_Size = gl.getUniformLocation(gl.program, "u_Size");
 }
+// Constants
+const SQUARE = 0;
+const TRIANGLE = 1;
+const CIRCLE = 2;
 
 // Global variables related to the color and size of the points
 let g_selectedColor = [1.0, 1.0, 1.0, 1.0];
 let selectedSize = 5;
-let g_selectedShape;
+let g_selectedShape = SQUARE;
 function addActionsForHtmlUI() {
   // this function get the color from the sliders to be used in the drawing
   document.querySelector("#redSlide").addEventListener("mouseup", function () {
@@ -85,17 +89,17 @@ function addActionsForHtmlUI() {
   document
     .getElementById("turnOnSquare")
     .addEventListener("click", function () {
-      g_selectedShape = "square";
+      g_selectedShape = SQUARE;
     });
   document
     .getElementById("turnOnTriangle")
     .addEventListener("click", function () {
-      g_selectedShape = "triangle";
+      g_selectedShape = TRIANGLE;
     });
   document
     .getElementById("turnOnCircle")
     .addEventListener("click", function () {
-      g_selectedShape = "circle";
+      g_selectedShape = CIRCLE;
     });
 }
 function main() {
@@ -122,14 +126,16 @@ var g_shapeLists = [];
 // var g_sizes = []; // The array to store the size of a point
 function click(ev) {
   [x, y] = convertCoordinatesEventToGL(ev);
+  console.log(x, y);
   let point;
-  if (g_selectedShape == "square") {
+  if (g_selectedShape == SQUARE) {
     point = new Square();
-  } else if (g_selectedShape == "triangle") {
+  } else if (g_selectedShape == TRIANGLE) {
     point = new Triangle();
   } else if (g_selectedShape == "circle") {
     point = new Circle();
   }
+  // console.log(point);
   point.position = [x, y];
   point.color = g_selectedColor.slice();
   point.size = selectedSize;
