@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Draw a point (1)</title>
+  </head>
+  <style>
+    input:focus {
+      outline: none;
+    }
+  </style>
+  <body onload="main()">
+    <canvas id="webgl" width="400" height="400">
+      Please use the browser supporting "canvas".
+    </canvas>
+    <div>
+      <button id="clearButton">Clear Canvas</button>
+    </div>
+    <div>
+      <h2>Drawing Mode</h2>
+      <div>
+        <button id="turnOnSquare">Squares</button>
+        <button id="turnOnTriangle">Triangles</button>
+        <button id="turnOnCircle">Circles</button>
+      </div>
+    </div>
+
+    <h1>Shape Color:</h1>
+    <div style="display: flex">
+      <div>
+        Red<input id="redSlide" type="range" min="0" max="100" step="any" />
+      </div>
+      <div>
+        Green<input id="greenSlide" type="range" min="0" max="100" step="any" />
+      </div>
+      <div>
+        Blue<input id="blueSlide" type="range" min="0" max="100" step="any" />
+      </div>
+    </div>
+    <div style="display: flex">
+      <div>
+        Shape Size:
+        <input id="shapeSize" type="range" min="5" max="40" />
+      </div>
+      <div id="segmentCount">(Circles Segment Count:<input type="range" /></div>
+    </div>
+    <script src="./lib/webgl-utils.js"></script>
+    <script src="./lib/webgl-debug.js"></script>
+    <script src="./lib/cuon-utils.js"></script>
+    <script src="./Square.js"></script>
+    <script src="./Triangle.js"></script>
+    <script src="/Circle.js"></script>
+    <script src="./ColoredPoints.js"></script>
+  </body>
+</html>
