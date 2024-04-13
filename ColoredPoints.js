@@ -65,6 +65,7 @@ const CIRCLE = 2;
 let g_selectedColor = [1.0, 1.0, 1.0, 1.0];
 let selectedSize = 5;
 let g_selectedShape = SQUARE;
+let g_segmentCount = 5;
 function addActionsForHtmlUI() {
   // this function get the color from the sliders to be used in the drawing
   document.querySelector("#redSlide").addEventListener("mouseup", function () {
@@ -101,6 +102,11 @@ function addActionsForHtmlUI() {
     .addEventListener("click", function () {
       g_selectedShape = CIRCLE;
     });
+  document
+    .getElementById("segmentCount")
+    .addEventListener("mouseup", function () {
+      g_segmentCount = this.value;
+    });
 }
 function main() {
   // Set up canvas and gl variables
@@ -121,19 +127,18 @@ function main() {
   gl.clear(gl.COLOR_BUFFER_BIT);
 }
 var g_shapeLists = [];
-// var g_points = []; // The array for the position of a mouse press
-// var g_colors = []; // The array to store the color of a point
-// var g_sizes = []; // The array to store the size of a point
 function click(ev) {
   [x, y] = convertCoordinatesEventToGL(ev);
-  console.log(x, y);
+  // console.log(x, y);
   let point;
   if (g_selectedShape == SQUARE) {
     point = new Square();
   } else if (g_selectedShape == TRIANGLE) {
     point = new Triangle();
-  } else if (g_selectedShape == "circle") {
+  } else {
     point = new Circle();
+    point.segment = g_segmentCount;
+    // console.log("circle");
   }
   // console.log(point);
   point.position = [x, y];
@@ -143,21 +148,6 @@ function click(ev) {
   // console.log(g_shapeLists);
   // Store the coordinates to g_points array
   // g_points.push([x, y]);
-
-  // g_colors.push(g_selectedColor.slice());
-  // // console.log(g_selectedColor);
-  // g_sizes.push(selectedSize);
-  // Store the coordinates to g_points array
-  // if (x >= 0.0 && y >= 0.0) {
-  // First quadrant
-  // g_colors.push([1.0, 0.0, 0.0, 1.0]); // Red
-  // } else if (x < 0.0 && y < 0.0) {
-  // // Third quadrant
-  // g_colors.push([0.0, 1.0, 0.0, 1.0]); // Green
-  // } else {
-  // // Others
-  // g_colors.push([1.0, 1.0, 1.0, 1.0]); // White
-  // }
   renderAllShapes();
 }
 

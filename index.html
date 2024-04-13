@@ -9,6 +9,7 @@
       outline: none;
     }
   </style>
+  <script src="./Triangle.js"></script>
   <body onload="main()">
     <canvas id="webgl" width="400" height="400">
       Please use the browser supporting "canvas".
@@ -42,13 +43,19 @@
         Shape Size:
         <input id="shapeSize" type="range" min="5" max="40" />
       </div>
-      <div id="segmentCount">(Circles Segment Count:<input type="range" /></div>
+      <div>
+        Circles Segment Count:<input
+          id="segmentCount"
+          type="range"
+          min="5"
+          max="20"
+        />
+      </div>
     </div>
     <script src="./lib/webgl-utils.js"></script>
     <script src="./lib/webgl-debug.js"></script>
     <script src="./lib/cuon-utils.js"></script>
     <script src="./Square.js"></script>
-    <script src="./Triangle.js"></script>
     <script src="./Circle.js"></script>
     <script src="./ColoredPoints.js"></script>
   </body>
