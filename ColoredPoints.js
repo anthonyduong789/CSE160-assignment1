@@ -21,12 +21,11 @@ let gl;
 let a_Position;
 let u_FragColor;
 let u_Size;
+
 function setupWebGL() {
   // Retrieve <canvas> element
   canvas = document.getElementById("webgl");
 
-  // Get the rendering context for WebGL
-  // gl = getWebGLContext(canvas);
   gl = canvas.getContext("webgl", { preserveDrawingBuffer: true });
   if (!gl) {
     console.log("Failed to get the rendering context for WebGL");
@@ -107,12 +106,20 @@ function addActionsForHtmlUI() {
     .addEventListener("mouseup", function () {
       g_segmentCount = this.value;
     });
+  document
+    .getElementById("turnOneSword")
+    .addEventListener("click", function () {
+      intilizedSwordDrawing();
+    });
 }
 function main() {
   // Set up canvas and gl variables
   setupWebGL();
   // sets up the shadow programs and also the
   connectVariablesToGLSL();
+  let myDrawing = new Sword();
+  myDrawing.render();
+
   // register function (event handler) to be called on a mouse press
   canvas.onmousedown = click;
   // checks to see if the button was being pressed while the mouse was moving
@@ -122,9 +129,10 @@ function main() {
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   addActionsForHtmlUI();
-
   // // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
+
+  // Draw the rectangle
 }
 var g_shapeLists = [];
 function click(ev) {
@@ -155,7 +163,7 @@ function convertCoordinatesEventToGL(ev) {
   var x = ev.clientX; // x coordinate of a mouse pointer
   var y = ev.clientY; // y coordinate of a mouse pointer
   var rect = ev.target.getBoundingClientRect();
-
+  turnOneSword;
   x = (x - rect.left - canvas.width / 2) / (canvas.width / 2);
   y = (canvas.height / 2 - (y - rect.top)) / (canvas.height / 2);
   return [x, y];
