@@ -14,9 +14,28 @@
       height: 100px;
       border: 1px solid #000;
     }
+    img {
+      height: 200px;
+      width: 200px;
+    }
+    #bottomSpace {
+      height: 20vh;
+      width: 100vw;
+      background-color: white;
+    }
   </style>
   <script src="./Triangle.js"></script>
   <body onload="main()">
+    <div>
+      <h2>Anthony Duong</h2>
+      <h2>ankaduon@ucsc.edu</h2>
+      <h2>
+        Notes to graders: I added a way to invert the colors as well as a
+        display for the curernt colors selected.
+      </h2>
+      <h1>Reference Image:</h1>
+      <img src="./IMG_7061.jpg" alt="" />
+    </div>
     <canvas id="webgl" width="400" height="400">
       Please use the browser supporting "canvas".
     </canvas>
@@ -64,6 +83,7 @@
         />
       </div>
     </div>
+    <div id="bottomSpace"></div>
     <script src="./lib/webgl-utils.js"></script>
     <script src="./lib/webgl-debug.js"></script>
     <script src="./lib/cuon-utils.js"></script>
