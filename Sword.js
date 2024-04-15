@@ -32,80 +32,12 @@ function intilizedSwordDrawing() {
   let y = -1;
   let y1 = -1;
   let fraction = 1 / 5;
-  let yellow = [1, 1, 0, 1];
-  let grey = [1, 1, 1, 1];
+  let yellow = [1, 0.824, 0.125, 1];
+  let grey = [0.62, 0.612, 0.588, 1];
+  let baige = [0.788, 0.624, 0.51, 1];
   // topright right angle
 
-  n = initVertexBuffers(
-    gl,
-    [
-      -fraction / 2,
-      0 + y + fraction + fraction * 3,
-      fraction / 2,
-      0 + y + fraction * 3,
-      fraction / 2,
-      fraction + y + fraction * 3,
-    ],
-    yellow
-  );
-  //topleftrightAngle
-  n = initVertexBuffers(
-    gl,
-    [
-      0 + fraction / 2,
-      0 + y + fraction + fraction * 3,
-      0 + fraction / 2,
-      0 + y + fraction * 3,
-      (3 * fraction) / 2,
-      fraction + y + fraction * 3,
-    ],
-    yellow
-  );
-
-  n = initVertexBuffers(
-    gl,
-    [
-      -fraction / 2,
-      y + fraction * 3,
-      -fraction / 2,
-      y + fraction * 4,
-      fraction / 2,
-      y + fraction * 3,
-    ],
-    yellow
-  );
-  //bottom left right angle
-  n = initVertexBuffers(
-    gl,
-    [
-      fraction + fraction / 2,
-      y + fraction * 3,
-      fraction + fraction / 2,
-      y + fraction * 4,
-      fraction / 2 + 2 * fraction,
-      y + fraction * 3,
-    ],
-    yellow
-  );
-
-  //bottomright rightanlge
-  n = initVertexBuffers(
-    gl,
-    [
-      fraction + fraction / 2,
-      y + fraction * 3,
-
-      fraction + fraction / 2,
-      y + fraction * 4,
-
-      fraction / 2,
-      y + fraction * 3,
-    ],
-    yellow
-  );
-
-  n = initVertexBuffers(
-    gl,
+  let middleSection = [
     [
       -fraction - fraction / 2,
       y + fraction * 3,
@@ -116,9 +48,55 @@ function intilizedSwordDrawing() {
       -fraction / 2,
       y + fraction * 3,
     ],
-    yellow
-  );
-  // n = initVertexBuffers(gl,[-fV)
+    [
+      fraction + fraction / 2,
+      y + fraction * 3,
+
+      fraction + fraction / 2,
+      y + fraction * 4,
+
+      fraction / 2,
+      y + fraction * 3,
+    ],
+    [
+      fraction + fraction / 2,
+      y + fraction * 3,
+      fraction + fraction / 2,
+      y + fraction * 4,
+      fraction / 2 + 2 * fraction,
+      y + fraction * 3,
+    ],
+    [
+      -fraction / 2,
+      y + fraction * 3,
+      -fraction / 2,
+      y + fraction * 4,
+      fraction / 2,
+      y + fraction * 3,
+    ],
+    [
+      0 + fraction / 2,
+      0 + y + fraction + fraction * 3,
+      0 + fraction / 2,
+      0 + y + fraction * 3,
+      (3 * fraction) / 2,
+      fraction + y + fraction * 3,
+    ],
+    [
+      -fraction / 2,
+      0 + y + fraction + fraction * 3,
+      fraction / 2,
+      0 + y + fraction * 3,
+      fraction / 2,
+      fraction + y + fraction * 3,
+    ],
+  ];
+
+  for (let i = 0; i < middleSection.length; i++) {
+    initVertexBuffers(gl, middleSection[i], yellow);
+  }
+  console.log(middleSection.length);
+
   for (let i = 0; i < 8; i++) {
     if (i != 3) {
       n = initVertexBuffers(
@@ -138,11 +116,11 @@ function intilizedSwordDrawing() {
       n = initVertexBuffers(
         gl,
         [0, 0 + y, fraction, 0 + y, fraction, fraction + y],
-        grey
+        baige
       );
 
       if (n < 0) {
-        console.log("Failed to set the positions of the vertices");
+        console.og("Failed to set the positions of the vertices");
         return;
       }
     }

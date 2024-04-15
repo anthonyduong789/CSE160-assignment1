@@ -9,6 +9,7 @@ var VSHADER_SOURCE =
   "}\n";
 
 // Fragment shader program
+
 var FSHADER_SOURCE =
   "precision mediump float;\n" +
   "uniform vec4 u_FragColor;\n" + // uniform変数
@@ -65,18 +66,26 @@ let g_selectedColor = [1.0, 1.0, 1.0, 1.0];
 let selectedSize = 5;
 let g_selectedShape = SQUARE;
 let g_segmentCount = 5;
+// 0=black 1=white
+let colorMode = 0;
+
 function addActionsForHtmlUI() {
   // this function get the color from the sliders to be used in the drawing
   document.querySelector("#redSlide").addEventListener("mouseup", function () {
     g_selectedColor[0] = this.value / 100;
+
+    updateColor();
   });
   document
     .querySelector("#greenSlide")
     .addEventListener("mouseup", function () {
       g_selectedColor[1] = this.value / 100;
+      updateColor();
     });
   document.querySelector("#blueSlide").addEventListener("mouseup", function () {
     g_selectedColor[2] = this.value / 100;
+
+    updateColor();
   });
   // size of the slider
   document.getElementById("shapeSize").addEventListener("mouseup", function () {
@@ -111,14 +120,23 @@ function addActionsForHtmlUI() {
     .addEventListener("click", function () {
       intilizedSwordDrawing();
     });
+  document
+    .getElementById("invertButton")
+    .addEventListener("click", function () {
+      if (colorMode == 0) {
+        colorMode = 1;
+      } else {
+        colorMode = 0;
+      }
+      invertShapes();
+    });
 }
 function main() {
   // Set up canvas and gl variables
   setupWebGL();
   // sets up the shadow programs and also the
   connectVariablesToGLSL();
-  let myDrawing = new Sword();
-  myDrawing.render();
+  intilizedSwordDrawing();
 
   // register function (event handler) to be called on a mouse press
   canvas.onmousedown = click;
@@ -126,12 +144,14 @@ function main() {
   canvas.onmousemove = function (ev) {
     if (ev.buttons == 1) click(ev);
   };
+
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   addActionsForHtmlUI();
   // // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
 
+  intilizedSwordDrawing();
   // Draw the rectangle
 }
 var g_shapeLists = [];
@@ -171,10 +191,34 @@ function convertCoordinatesEventToGL(ev) {
 // this function draws all the shaepes
 function renderAllShapes() {
   // Clear <canvas>
+  if (colorMode == 0) {
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  } else {
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);
+  }
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   var len = g_shapeLists.length;
   for (var i = 0; i < len; i++) {
     g_shapeLists[i].render();
   }
+}
+
+function invertShapes() {
+  var len = g_shapeLists.length;
+  for (let i = 0; i < len; i++) {
+    let rgba = g_shapeLists[i].color;
+    let reverse = [0, 0, 0, 1];
+    for (let i = 0; i < rgba.length - 1; i++) {
+      reverse[i] = 1.0 - rgba[i];
+    }
+
+    g_shapeLists[i].color = reverse;
+  }
+  renderAllShapes();
+}
+function updateColor() {
+  var color = `rgba(${g_selectedColor[0] * 255}, ${g_selectedColor[1] * 255},
+    ${g_selectedColor[2] * 255}, ${g_selectedColor[3]})`;
+  document.getElementById("colorDisplay").style.backgroundColor = color;
 }
